@@ -3,14 +3,18 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: trilha-poo-app
+    container_name: trilha-poo-php
     working_dir: /var/www
     volumes:
       - ./:/var/www
+    ports:
+      - "8000:8000"
+    command: php -S 0.0.0.0:8000 -t public
     stdin_open: true
     tty: true
     depends_on:
       - postgres
+
   postgres:
     image: postgres:17
     container_name: trilha-poo-pgsql
@@ -22,5 +26,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
 volumes:
   postgres_data:
