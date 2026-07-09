@@ -1,0 +1,15 @@
+{
+    "name": "freeline-17/trilha-poo",
+    "autoload": {
+        "psr-4": {
+            "Freeline17\\TrilhaPoo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "dentros",
+            "email": "megami.ay@gmail.com"
+        }
+    ],
+    "require": {}
+}
