@@ -1,0 +1,19 @@
+branches
+    aula-00-ambiente
+    aula-01-composer
+    aula-02-primeira-classe
+    aula-03-objetos
+    aula-04-atributos
+    aula-05-metodos
+    aula-06-construtor
+    aula-07-encapsulamento
+    aula-08-heranca
+    aula-09-polimorfismo
+    aula-10-abstracao
+    aula-11-interfaces
+    aula-12-traits
+    aula-13-exceptions
+    aula-14-postgresql
+    aula-15-repositories
+    aula-16-services
+    aula-17-projeto-final
