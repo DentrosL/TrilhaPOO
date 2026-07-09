@@ -2,7 +2,7 @@
 
 Repositório criado para ensinar Programação Orientada a Objetos (POO) utilizando um ambiente moderno com:
 
-- PHP 8+
+- PHP 8.4
 - PostgreSQL
 - Docker
 - Composer
