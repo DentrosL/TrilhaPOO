@@ -1,9 +1,18 @@
 <?php
 
-class Usuario implements Autenticavel
+class Usuario
 {
-    public function autenticar(string $senha): bool
-    {
-        return $senha === "123456";
-    }
+    use Logger;
 }
+
+$usuario = new Usuario();
+$usuario->registrarLog(); // utiliza o método do trait Logger
+
+// reutilizando em outra classe
+class Produto
+{
+    use Logger;
+}
+
+$produto = new Produto();
+$produto->registrarLog();
