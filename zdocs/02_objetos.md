@@ -18,6 +18,6 @@ Na programação acontece a mesma coisa:
       ▼         ▼         ▼
  pessoa1    pessoa2    pessoa3
 ```
-Todas as pessoas foram criadas utilizando a mesma classe, ou seja elas tem o mesmo molde (atributos e metodos).
+Todas as pessoas foram criadas utilizando a mesma classe, ou seja elas tem o mesmo molde (atributos e métodos).
 
 Na linha 9 do arquivo Pessoa.php, você pode encontrar como instânciar uma classe no código
