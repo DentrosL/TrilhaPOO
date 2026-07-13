@@ -2,15 +2,24 @@
 
 class Pessoa
 {
-    // atributos
-    public string $nome;
-    
-    // construtor
-    public function __construct(string $nome){
+    private string $nome;
+
+    public function __construct(string $nome)
+    {
         $this->nome = $nome;
-        echo "Objeto criado!";
+    }
+
+    // método público para acessar a propriedade privada $nome
+    public function getNome(): string
+    {
+        return $this->nome;
     }
 }
-// não chamamos o método manualmente.ele é executado sozinho.
-// agora da pra criar um objeto já com o nome definido no construtor.
-$pessoa = new Pessoa("Elisa");
+
+$pessoa = new Pessoa("Aliceti");
+
+// não vai funcionar, pois estamos tentando acessar a propriedade privada $nome diretamente
+// echo $pessoa->nome;
+
+// dessa forma funciona, pois estamos chamando o método público getNome():
+echo $pessoa->getNome();
