@@ -1,6 +1,6 @@
 <?php
 
-class Pessoa
+abstract class Pessoa
 {
     protected string $nome;
     protected int $idade;
@@ -11,10 +11,7 @@ class Pessoa
         $this->idade = $idade;
     }
 
-    public function apresentar(): void
-    {
-        echo "Meu nome é {$this->nome}.";
-    }
+    abstract function apresentar(): void;
 }
 
 class Funcionario extends Pessoa
@@ -56,11 +53,8 @@ class Cliente extends Pessoa
         echo "Olá! Meu nome é {$this->nome} e sou cliente.";
     }
 }
-
-// Exemplo de uso das classes com polimorfismo
 $cliente = new Cliente("Maria", 30, 12345678901);
 $funcionario = new Funcionario("João", 28, 5000);
 
-// Chamando o método apresentar() para cada objeto, retornando coisas difetentes, mesmo que o método seja o mesmo.
 $cliente->apresentar();
 $funcionario->apresentar();
