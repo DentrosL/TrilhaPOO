@@ -30,13 +30,37 @@ class Funcionario extends Pessoa
 
         $this->salario = $salario;
     }
+
+    public function apresentar(): void
+    {
+        echo "Olá! Meu nome é {$this->nome} e sou funcionário.";
+    }
 }
 
-// dessa forma, a classe Funcionario herda os métodos e propriedades da classe Pessoa, e podemos criar um objeto Funcionario com nome, idade e salário.
-$funcionario = new Funcionario(
-    "Ana",
-    21,
-    5500
-);
+class Cliente extends Pessoa
+{
+    protected float $cpf_cnpj;
 
+    public function __construct(
+        string $nome,
+        int $idade,
+        float $cpf_cnpj
+    ) {
+        parent::__construct($nome, $idade);
+
+        $this->cpf_cnpj = $cpf_cnpj;
+    }
+
+    public function apresentar(): void
+    {
+        echo "Olá! Meu nome é {$this->nome} e sou cliente.";
+    }
+}
+
+// Exemplo de uso das classes com polimorfismo
+$cliente = new Cliente("Maria", 30, 12345678901);
+$funcionario = new Funcionario("João", 28, 5000);
+
+// Chamando o método apresentar() para cada objeto, retornando coisas difetentes, mesmo que o método seja o mesmo.
+$cliente->apresentar();
 $funcionario->apresentar();
