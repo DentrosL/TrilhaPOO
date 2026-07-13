@@ -1,6 +1,5 @@
 ## O que é o encapsulamento?
 > Teoria
-
 - Encapsulamento é o princípio de proteger os dados de um objeto, permitindo que eles sejam acessados ou alterados apenas de maneira controlada.
 - Em vez de permitir acesso direto aos atributos, fazemos isso por meio de métodos.
 

@@ -2,24 +2,41 @@
 
 class Pessoa
 {
-    private string $nome;
+    protected string $nome;
+    protected int $idade;
 
-    public function __construct(string $nome)
+    public function __construct(string $nome, int $idade)
     {
         $this->nome = $nome;
+        $this->idade = $idade;
     }
 
-    // método público para acessar a propriedade privada $nome
-    public function getNome(): string
+    public function apresentar(): void
     {
-        return $this->nome;
+        echo "Meu nome é {$this->nome}.";
     }
 }
 
-$pessoa = new Pessoa("Aliceti");
+class Funcionario extends Pessoa
+{
+    protected float $salario;
 
-// não vai funcionar, pois estamos tentando acessar a propriedade privada $nome diretamente
-// echo $pessoa->nome;
+    public function __construct(
+        string $nome,
+        int $idade,
+        float $salario
+    ) {
+        parent::__construct($nome, $idade);
 
-// dessa forma funciona, pois estamos chamando o método público getNome():
-echo $pessoa->getNome();
+        $this->salario = $salario;
+    }
+}
+
+// dessa forma, a classe Funcionario herda os métodos e propriedades da classe Pessoa, e podemos criar um objeto Funcionario com nome, idade e salário.
+$funcionario = new Funcionario(
+    "Ana",
+    21,
+    5500
+);
+
+$funcionario->apresentar();
