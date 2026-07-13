@@ -4,33 +4,13 @@ class Pessoa
 {
     // atributos
     public string $nome;
-    public int $idade;
-    public string $sexo;
-    public float $altura;
-    public float $peso;
     
-    // métodos
-    public function apresentar()
-    {
-        echo "Olá! Meu nome é $this->nome.";
-    }
-
-    public function calcularIMC():float
-    {
-        return $this->peso/($this->altura*$this->altura);
+    // construtor
+    public function __construct(string $nome){
+        $this->nome = $nome;
+        echo "Objeto criado!";
     }
 }
-
-// criando um objeto
-$pessoa = new Pessoa();
-
-// armazenando valores nos atributos do objeto
-$pessoa->nome = "José";
-$pessoa->idade = 21;
-$pessoa->sexo = "Masculino";
-$pessoa->altura = 1.75;
-$pessoa->peso = 70.0;
-
-// utilizando métodos do objeto
-$pessoa->apresentar();
-echo "Meu IMC é: ".$pessoa->calcularIMC();
+// não chamamos o método manualmente.ele é executado sozinho.
+// agora da pra criar um objeto já com o nome definido no construtor.
+$pessoa = new Pessoa("Elisa");
