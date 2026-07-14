@@ -11,7 +11,7 @@ O objetivo é construir o conhecimento de forma progressiva, começando pelos co
 
 ## Como utilizar este repositório
 
-Este projeto foi organizado por **branches**, permitindo acompanhar a evolução do código ao longo das aulas.
+Este projeto foi organizado por **branches**, permitindo acompanhar a evolução do código ao longo das etapas.
 
 Cada branch representa uma etapa da trilha de aprendizado.
 
