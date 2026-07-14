@@ -1,4 +1,6 @@
 ## O que é o Repository Pattern?
+> Teoria
+
 O Repository Pattern é um padrão de projeto que separa o acesso aos dados da lógica da aplicação.
 - Em vez de a classe acessar o banco diretamente, criamos uma classe especializada nisso.
 
