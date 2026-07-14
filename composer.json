@@ -2,7 +2,7 @@
     "name": "freeline-17/trilha-poo",
     "autoload": {
         "psr-4": {
-            "Freeline17\\TrilhaPoo\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
