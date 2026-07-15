@@ -39,13 +39,13 @@ $checklist = [
     <main class="container">
         <section class="hero">
             <div class="hero-text">
-                <h2>Bem-vindo à Trilha POO</h2>
+                <h2>Bem-vindo(a) à Trilha POO</h2>
                 <p>
                     Este projeto reúne todos os conceitos estudados ao longo da trilha,
                     aplicando Programação Orientada a Objetos em uma aplicação completa.
                 </p>
                 <div class="buttons">
-                    <a href="./dashboard.php" class="btn secondary">Sistema</a>
+                    <a href="./home.php" class="btn secondary">Sistema</a>
                     <a href="#" class="btn primary">Documentação</a>
                     <a href="https://github.com/DentrosL/TrilhaPOO" class="btn">GitHub</a>
                 </div>
@@ -99,7 +99,7 @@ $checklist = [
         </section>
     </main>
     <footer>
-        Desenvolvido para fins de estudo • Trilha POO
+        Desenvolvido por <a href="https://github.com/DentrosL" target="_blank" rel="noopener noreferrer">@dentrosl</a> para fins de estudo • Trilha POO
     </footer>
 </body>
 </html>
