@@ -2,38 +2,47 @@
 
 namespace App\Repositories;
 
-use App\Models\Cliente;
 use App\Models\Encomenda;
-use App\Models\Endereco;
+use App\Repositories\ClienteRepository;
+use App\Repositories\EnderecoRepository;
 use PDO;
 
 class EncomendaRepository extends BaseRepository
 {
-    public function criar(string $codigo, Cliente $cliente, float $peso, float $volume, Endereco $origem, Endereco $destino, float $valor): bool
+    private ClienteRepository $clienteRepository;
+    private EnderecoRepository $enderecoRepository;
+
+    public function __construct()
     {
-        $sql = "
-            INSERT INTO encomendas
-                (codigo, cliente_id, origem_id, destino_id, peso, volume, valor)
-            VALUES
-                (:codigo, :cliente_id, :origem_id, :destino_id, :peso, :volume, :valor)";
+        parent::__construct();
+
+        $this->clienteRepository = new ClienteRepository();
+        $this->enderecoRepository = new EnderecoRepository();
+    }
+
+    public function criar(Encomenda $encomenda): bool
+    {
+        $sql = "INSERT INTO encomendas
+                    (codigo, cliente_id, origem_id, destino_id, peso, volume, valor)
+                VALUES
+                    (:codigo, :cliente_id, :origem_id, :destino_id, :peso, :volume, :valor)";
 
         $stmt = $this->connection->prepare($sql);
 
         return $stmt->execute([
-            'codigo' => $codigo,
-            'cliente_id' => $cliente->getId(),
-            'origem_id' => $origem->getId(),
-            'destino_id' => $destino->getId(),
-            'peso' => $peso,
-            'volume' => $volume,
-            'valor' => $valor,
+            'codigo'        => $encomenda->getCodigo(),
+            'cliente_id'    => $encomenda->getCliente()->getId(),
+            'origem_id'     => $encomenda->getOrigem()->getId(),
+            'destino_id'    => $encomenda->getDestino()->getId(),
+            'peso'          => $encomenda->getPeso(),
+            'volume'        => $encomenda->getVolume(),
+            'valor'         => $encomenda->getValor(),
         ]);
     }
 
     public function deletar(int $id): bool
     {
         $sql = "DELETE FROM encomendas WHERE id = :id";
-
         $stmt = $this->connection->prepare($sql);
 
         return $stmt->execute(['id' => $id]);
@@ -41,25 +50,48 @@ class EncomendaRepository extends BaseRepository
 
     public function listar(): array
     {
-        $sql = "SELECT * FROM encomendas";
-
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->query("SELECT id FROM encomendas");
 
         $encomendas = [];
+
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $encomenda = new Encomenda(
-                $data['codigo'],
-                new Cliente($data['cliente_id'], '', '', ''),
-                (float)$data['peso'],
-                (float)$data['volume'],
-                new Endereco($data['origem_id'], '', '', '', '', '', ''),
-                new Endereco($data['destino_id'], '', '', '', '', '', ''),
-                (float)$data['valor']
-            );
-            $encomenda->setId((int)$data['id']);
-            $encomendas[] = $encomenda;
+            $encomendas[] = $this->buscarPorId((int) $data['id']);
         }
 
         return $encomendas;
+    }
+
+    public function buscarPorId(int $id): ?Encomenda
+    {
+        $sql = "SELECT * FROM encomendas WHERE id = :id";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'id' => $id,
+        ]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        $cliente = $this->clienteRepository->buscarPorId((int) $data['cliente_id']);
+        $origem = $this->enderecoRepository->buscarPorId((int) $data['origem_id']);
+        $destino = $this->enderecoRepository->buscarPorId((int) $data['destino_id']);
+
+        $encomenda = new Encomenda(
+            $data['codigo'],
+            $cliente,
+            (float) $data['peso'],
+            (float) $data['volume'],
+            $origem,
+            $destino,
+            (float) $data['valor']
+        );
+
+        $encomenda->setId((int) $data['id']);
+
+        return $encomenda;
     }
 }

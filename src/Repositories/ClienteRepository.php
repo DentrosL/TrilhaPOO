@@ -10,11 +10,10 @@ class ClienteRepository extends BaseRepository
 {
     public function criar(Cliente $cliente): bool
     {
-        $sql = "
-            INSERT INTO clientes
-                (nome, email, telefone, cpf)
-            VALUES
-                (:nome, :email, :telefone, :cpf)";
+        $sql = "INSERT INTO clientes
+                    (nome, email, telefone, cpf)
+                VALUES
+                    (:nome, :email, :telefone, :cpf)";
 
         $stmt = $this->connection->prepare($sql);
 
@@ -28,11 +27,9 @@ class ClienteRepository extends BaseRepository
 
     public function atualizar(Cliente $cliente): bool
     {
-        $sql = "
-            UPDATE clientes
-            SET nome = :nome, email = :email, telefone = :telefone, cpf = :cpf
-            WHERE id = :id";
-
+        $sql = "UPDATE clientes
+                SET nome = :nome, email = :email, telefone = :telefone, cpf = :cpf
+                WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
 
         return $stmt->execute([
@@ -47,7 +44,6 @@ class ClienteRepository extends BaseRepository
     public function deletar(int $id): bool
     {
         $sql = "DELETE FROM clientes WHERE id = :id";
-
         $stmt = $this->connection->prepare($sql);
 
         return $stmt->execute(['id' => $id]);
@@ -56,7 +52,6 @@ class ClienteRepository extends BaseRepository
     public function listar(): array
     {
         $sql = "SELECT * FROM clientes";
-
         $stmt = $this->connection->query($sql);
 
         $clientes = [];
@@ -72,7 +67,6 @@ class ClienteRepository extends BaseRepository
     public function buscarPorId(int $id): ?Cliente
     {
         $sql = "SELECT * FROM clientes WHERE id = :id";
-
         $stmt = $this->connection->prepare($sql);
         $stmt->execute(['id' => $id]);
 

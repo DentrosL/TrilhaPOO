@@ -37,7 +37,7 @@ class Rastreamento
         return $this->descricao;
     }
 
-    public function getdata_hora(): \DateTime
+    public function getDataHora(): \DateTime
     {
         return $this->data_hora;
     }
