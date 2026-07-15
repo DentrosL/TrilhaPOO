@@ -1,5 +1,5 @@
 CREATE TABLE encomendas (
-    id SERIAL PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     codigo VARCHAR(30) UNIQUE NOT NULL,
     cliente_id INTEGER NOT NULL,
     origem_id INTEGER NOT NULL,

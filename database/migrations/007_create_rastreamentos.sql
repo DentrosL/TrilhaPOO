@@ -1,5 +1,5 @@
 CREATE TABLE rastreamentos (
-    id SERIAL PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     entrega_id INTEGER NOT NULL,
     cidade VARCHAR(100),
     descricao TEXT,

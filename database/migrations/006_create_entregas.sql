@@ -1,5 +1,5 @@
 CREATE TABLE entregas (
-    id SERIAL PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     codigo VARCHAR(30) UNIQUE,
     encomenda_id INTEGER NOT NULL UNIQUE,
     motorista_id INTEGER NOT NULL,

@@ -2,17 +2,29 @@
 
 namespace App\Models;
 
+use DateTime;
+
 class Rastreamento
 {
     private int $id = 0;
     private string $cidade;
     private string $descricao;
-    private \DateTime $dataHora;
+    private DateTime $data_hora;
 
-    public function __construct(string $cidade, string $descricao) {
+    public function __construct(string $cidade, string $descricao, DateTime $data_hora) {
         $this->cidade = $cidade;
         $this->descricao = $descricao;
-        $this->dataHora = new \DateTime();
+        $this->data_hora = $data_hora;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getCidade(): string
@@ -25,8 +37,8 @@ class Rastreamento
         return $this->descricao;
     }
 
-    public function getDataHora(): \DateTime
+    public function getdata_hora(): \DateTime
     {
-        return $this->dataHora;
+        return $this->data_hora;
     }
 }

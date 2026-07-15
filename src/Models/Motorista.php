@@ -21,6 +21,16 @@ class Motorista
         $this->disponivel = true;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function setDisponivel(bool $disponivel): void
     {
         $this->disponivel = $disponivel;

@@ -5,6 +5,7 @@ namespace App\Models;
 class Endereco
 {
     private int $id = 0;
+    private string $tipo; // residencial, comercial, entrega, cobrança, etc.
     private Cliente $cliente;
     private string $rua;
     private string $numero;
@@ -12,7 +13,6 @@ class Endereco
     private string $cidade;
     private string $estado;
     private string $cep;
-    private string $tipo; // residencial, comercial, entrega, cobrança, etc.
 
     public function __construct(string $rua, string $numero, string $bairro, string $cidade, string $estado, string $cep, string $tipo)
     {

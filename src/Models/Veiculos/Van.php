@@ -8,14 +8,15 @@ class Van extends Veiculo
 {
     public function __construct(
         string $placa,
+        string $marca,
         string $modelo,
         string $cor,
         int $ano
     ) {
-        parent::__construct($placa, $modelo, $cor, $ano);
+        parent::__construct($placa, $marca, $modelo, $cor, $ano);
 
-        $this->capacidadePeso = 1500;
-        $this->capacidadeVolume = 12;
+        $this->capacidade_peso = 1500;
+        $this->capacidade_volume = 12;
     }
 
     public function getTipo(): string

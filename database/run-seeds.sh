@@ -1,9 +1,10 @@
 #!/bin/bash
-for file in seeds/*.sql
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+for file in "$SCRIPT_DIR"/seeds/*.sql
 do
-    echo "Executando $file"
+    echo "Executando $(basename "$file")"
     docker compose exec -T postgres psql -U postgres -d trilha_poo < "$file"
 done
 
-echo
 echo "Seeds concluídas."

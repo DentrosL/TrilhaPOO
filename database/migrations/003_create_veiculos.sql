@@ -1,5 +1,5 @@
 CREATE TABLE veiculos (
-    id SERIAL PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('Moto', 'Van', 'Caminhao')),
     placa VARCHAR(8) UNIQUE NOT NULL,
     modelo VARCHAR(100) NOT NULL,

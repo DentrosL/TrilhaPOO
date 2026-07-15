@@ -4,6 +4,7 @@ namespace App\Models;
 
 class Entrega
 {
+    private int $id;
     private string $codigo;
     private Encomenda $encomenda;
     private Motorista $motorista;
@@ -16,6 +17,21 @@ class Entrega
         $this->encomenda = $encomenda;
         $this->motorista = $motorista;
         $this->veiculo = $veiculo;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getCodigo(): string
+    {
+        return $this->codigo;
     }
 
     public function getEncomenda(): Encomenda

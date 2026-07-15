@@ -2,26 +2,44 @@
 
 namespace App\Models;
 
-abstract class Veiculo
+class Veiculo
 {
+    private int $id;
     private string $placa;
+    private string $marca;
     private string $modelo;
     private string $cor;
     private int $ano;
-    protected float $capacidadePeso;
-    protected float $capacidadeVolume;
+    protected float $capacidade_peso;
+    protected float $capacidade_volume;
 
-    public function __construct(string $placa, string $modelo, string $cor, int $ano)
+    public function __construct(string $placa, string $marca, string $modelo, string $cor, int $ano)
     {
         $this->placa = $placa;
+        $this->marca = $marca;
         $this->modelo = $modelo;
         $this->cor = $cor;
         $this->ano = $ano;
+    }
+    
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getPlaca(): string
     {
         return $this->placa;
+    }
+
+    public function getMarca(): string
+    {
+        return $this->marca;
     }
 
     public function getModelo(): string
@@ -41,13 +59,16 @@ abstract class Veiculo
 
     public function getCapacidadePeso(): float
     {
-        return $this->capacidadePeso;
+        return $this->capacidade_peso;
     }
 
     public function getCapacidadeVolume(): float
     {
-        return $this->capacidadeVolume;
+        return $this->capacidade_volume;
     }
 
-    abstract public function getTipo(): string;
+    public function getTipo(): string
+    {
+        return 'Veículo';
+    }
 }
