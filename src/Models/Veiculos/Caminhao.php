@@ -17,4 +17,9 @@ class Caminhao extends Veiculo
         $this->capacidadePeso = 30000;
         $this->capacidadeVolume = 90;
     }
+
+    public function getTipo(): string
+    {
+        return 'Caminhão';
+    }
 }

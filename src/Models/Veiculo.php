@@ -48,4 +48,6 @@ abstract class Veiculo
     {
         return $this->capacidadeVolume;
     }
+
+    abstract public function getTipo(): string;
 }

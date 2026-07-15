@@ -17,4 +17,9 @@ class Van extends Veiculo
         $this->capacidadePeso = 1500;
         $this->capacidadeVolume = 12;
     }
+
+    public function getTipo(): string
+    {
+        return 'Van';
+    }
 }
