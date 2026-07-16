@@ -85,4 +85,58 @@ class MotoristaRepository extends BaseRepository
 
         return $motorista;
     }
+
+    public function buscarPorCpf(string $cpf): ?Motorista
+    {
+        $sql = "SELECT * FROM motoristas WHERE cpf = :cpf";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'cpf' => $cpf,
+        ]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        $motorista = new Motorista(
+            $data['nome'],
+            $data['cnh'],
+            $data['cpf'],
+            $data['categoria']
+        );
+
+        $motorista->setId((int) $data['id']);
+        $motorista->setDisponivel((bool) $data['disponivel']);
+
+        return $motorista;
+    }
+
+    public function buscarPorCnh(string $cnh): ?Motorista
+    {
+        $sql = "SELECT * FROM motoristas WHERE cnh = :cnh";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'cnh' => $cnh,
+        ]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        $motorista = new Motorista(
+            $data['nome'],
+            $data['cnh'],
+            $data['cpf'],
+            $data['categoria']
+        );
+
+        $motorista->setId((int) $data['id']);
+        $motorista->setDisponivel((bool) $data['disponivel']);
+
+        return $motorista;
+    }
 }

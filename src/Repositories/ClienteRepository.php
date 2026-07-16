@@ -105,4 +105,22 @@ class ClienteRepository extends BaseRepository
 
         return $enderecos;
     }
+
+    public function buscarPorCpf(string $cpf): ?Cliente
+    {
+        $sql = "SELECT * FROM clientes WHERE cpf = :cpf";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['cpf' => $cpf]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $cliente = new Cliente($data['nome'], $data['email'], $data['telefone'], $data['cpf']);
+            $cliente->setId($data['id']);
+            return $cliente;
+        }
+
+        return null;
+    }
+
 }

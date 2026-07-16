@@ -94,4 +94,22 @@ class EncomendaRepository extends BaseRepository
 
         return $encomenda;
     }
+
+    public function buscarPorCodigo(string $codigo): ?Encomenda
+    {
+        $sql = "SELECT id FROM encomendas WHERE codigo = :codigo";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'codigo' => $codigo,
+        ]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        return $this->buscarPorId((int) $data['id']);
+    }
+
 }

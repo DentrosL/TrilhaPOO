@@ -7,6 +7,7 @@ use App\Models\Veiculos\Moto;
 use App\Models\Veiculos\Van;
 use App\Models\Veiculo;
 use PDO;
+use ReflectionClass;
 
 class VeiculoRepository extends BaseRepository
 {
@@ -15,11 +16,13 @@ class VeiculoRepository extends BaseRepository
         $sql = "INSERT INTO veiculos
                     (tipo, placa, modelo, cor, ano, capacidade_peso, capacidade_volume)
                 VALUES
-                (:tipo, :placa, :modelo, :cor, :ano, :capacidade_peso, :capacidade_volume)";
+                    (:tipo, :placa, :modelo, :cor, :ano, :capacidade_peso, :capacidade_volume)";
         $stmt = $this->connection->prepare($sql);
 
+        $reflection = new ReflectionClass($veiculo);
+
         return $stmt->execute([
-            'tipo'               => class_basename($veiculo),
+            'tipo'               => $reflection->getShortName(),
             'placa'              => $veiculo->getPlaca(),
             'modelo'             => $veiculo->getModelo(),
             'cor'                => $veiculo->getCor(),
