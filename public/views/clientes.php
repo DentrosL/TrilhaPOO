@@ -1,9 +1,88 @@
-<header><div><h1>Clientes</h1><span>Gerenciamento de Clientes</span></div></header>
-<section class="cards"><div class="card"><small>Total de Clientes</small><h2><?= count($clientes) ?></h2></div></section>
-<section class="table-card"><div class="title">Adicionar cliente</div><form method="post" class="inline-form"><input type="hidden" name="acao" value="criar_cliente"><input name="nome" placeholder="Nome" required><input name="email" placeholder="E-mail" required><input name="telefone" placeholder="Telefone" required><input name="cpf" placeholder="CPF" required><button class="btn" type="submit">Adicionar</button></form></section>
-<section class="table-card"><div class="title">Editar cliente</div><form method="post" class="inline-form" id="edit-client-form"><input type="hidden" name="acao" value="editar_cliente"><select name="cliente_id" required><?php foreach ($clientes as $cliente): ?><option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option><?php endforeach; ?></select><input name="nome" placeholder="Nome" required><input name="email" placeholder="E-mail" required><input name="telefone" placeholder="Telefone" required><input name="cpf" placeholder="CPF" required><button class="btn" type="submit">Salvar edição</button></form></section>
-<section class="table-card"><div class="title">Endereços</div><form method="post" class="inline-form"><input type="hidden" name="acao" value="criar_endereco"><select name="cliente_id" required><?php foreach ($clientes as $cliente): ?><option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option><?php endforeach; ?></select><input name="rua" placeholder="Rua" required><input name="numero" placeholder="Número" required><input name="bairro" placeholder="Bairro" required><input name="cidade" placeholder="Cidade" required><input name="estado" placeholder="Estado" required><input name="cep" placeholder="CEP" required><input name="tipo" placeholder="Tipo" required><button class="btn" type="submit">Adicionar endereço</button></form></section>
-<section class="table-card"><div class="title">Lista de Clientes</div><table><thead><tr><th>ID</th><th>Nome</th><th>Documento</th><th>E-mail</th><th>Telefone</th><th>Ações</th></tr></thead><tbody><?php foreach ($clientes as $cliente): ?><tr><td><?= $cliente->getId() ?></td><td><?= esc($cliente->getNome()) ?></td><td><?= esc($cliente->getCpf()) ?></td><td><?= esc($cliente->getEmail()) ?></td><td><?= esc($cliente->getTelefone()) ?></td><td><div class="inline-action"><form method="post"><input type="hidden" name="acao" value="remover_cliente"><input type="hidden" name="id" value="<?= $cliente->getId() ?>"><button class="btn danger" type="submit">Remover</button></form></div></td></tr><?php endforeach; ?></tbody></table></section>
+<header>
+    <div>
+        <h1>Clientes</h1>
+        <span>Gerenciamento de Clientes</span>
+    </div>
+</header>
+<section class="cards">
+    <div class="card">
+        <small>Total de Clientes</small>
+        <h2><?= count($clientes) ?></h2>
+    </div>
+</section>
+<section class="table-card">
+    <div class="title">Adicionar cliente</div>
+    <form method="post" class="inline-form">
+        <input type="hidden" name="acao" value="criar_cliente">
+        <input name="nome" placeholder="Nome" required>
+        <input name="email" placeholder="E-mail" required>
+        <input name="telefone" placeholder="Telefone" required>
+        <input name="cpf" placeholder="CPF" required>
+        <button class="btn" type="submit">Adicionar</button>
+    </form>
+</section>
+<section class="table-card">
+    <div class="title">Editar cliente</div>
+    <form method="post" class="inline-form" id="edit-client-form">
+        <input type="hidden" name="acao" value="editar_cliente">
+        <select name="cliente_id" required>
+            <?php foreach ($clientes as $cliente): ?>
+                <option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input name="nome" placeholder="Nome" required>
+        <input name="email" placeholder="E-mail" required>
+        <input name="telefone" placeholder="Telefone" required>
+        <input name="cpf" placeholder="CPF" required>
+        <button class="btn" type="submit">Salvar edição</button>
+    </form>
+</section>
+<section class="table-card">
+    <div class="title">Endereços</div>
+    <form method="post" class="inline-form">
+        <input type="hidden" name="acao" value="criar_endereco">
+        <select name="cliente_id" required>
+            <?php foreach ($clientes as $cliente): ?>
+                <option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input name="rua" placeholder="Rua" required>
+        <input name="numero" placeholder="Número" required>
+        <input name="bairro" placeholder="Bairro" required>
+        <input name="cidade" placeholder="Cidade" required>
+        <input name="estado" placeholder="Estado" required>
+        <input name="cep" placeholder="CEP" required>
+        <input name="tipo" placeholder="Tipo" required>
+        <button class="btn" type="submit">Adicionar endereço</button>
+    </form>
+</section>
+<section class="table-card">
+    <div class="title">Lista de Clientes</div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Documento</th>
+                <th>E-mail</th)
+                <th>Telefone</th)
+                <th>Ações</th)
+            </tr>
+            </thead>
+        <tbody></tbody>
+            <?php foreach ($clientes as $cliente): ?>
+                <tr>
+                    <td><?= $cliente->getId() ?></td>
+                    <td><?= esc($cliente->getNome()) ?></td>
+                    <td><?= esc($cliente->getCpf()) ?></td>
+                    <td><?= esc($cliente->getEmail()) ?></td>
+                    <td><?= esc($cliente->getTelefone()) ?></td>
+                    <td><div class="inline-action"><form method="post"><input type="hidden" name="acao" value="remover_cliente"><input type="hidden" name="id" value="<?= $cliente->getId() ?>"><button class="btn danger" type="submit">Remover</button></form></div></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            </table>
+</section>
 
 <script>
 	window.CLIENTS = <?= json_encode(array_map(function($c){ return ['id' => $c->getId(),'nome' => $c->getNome(),'email' => $c->getEmail(),'telefone' => $c->getTelefone(),'cpf' => $c->getCpf()]; }, $clientes), JSON_UNESCAPED_UNICODE) ?>;

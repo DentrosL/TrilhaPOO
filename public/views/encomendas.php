@@ -1,4 +1,75 @@
-<header><div><h1>Encomendas</h1><span>Gerenciamento de Encomendas</span></div></header>
-<section class="cards"><div class="card"><small>Total</small><h2><?= count($encomendas) ?></h2></div></section>
-<section class="table-card"><div class="title">Adicionar encomenda</div><form method="post" class="inline-form"><input type="hidden" name="acao" value="criar_encomenda"><input name="codigo" placeholder="Código" required><select name="cliente_id" required><?php foreach ($clientes as $cliente): ?><option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option><?php endforeach; ?></select><select name="origem_id" required><?php foreach ($enderecos as $endereco): ?><option value="<?= $endereco->getId() ?>"><?= esc($endereco->getCidade()) ?> - <?= esc($endereco->getTipo()) ?></option><?php endforeach; ?></select><select name="destino_id" required><?php foreach ($enderecos as $endereco): ?><option value="<?= $endereco->getId() ?>"><?= esc($endereco->getCidade()) ?> - <?= esc($endereco->getTipo()) ?></option><?php endforeach; ?></select><input name="peso" type="number" step="0.01" placeholder="Peso" required><input name="volume" type="number" step="0.01" placeholder="Volume" required><input name="valor" type="number" step="0.01" placeholder="Valor" required><button class="btn" type="submit">Adicionar</button></form></section>
-<section class="table-card"><div class="title">Encomendas</div><table><thead><tr><th>Código</th><th>Cliente</th><th>Origem</th><th>Destino</th><th>Peso</th><th>Valor</th><th>Ações</th></tr></thead><tbody><?php foreach ($encomendas as $encomenda): ?><tr><td><?= esc($encomenda->getCodigo()) ?></td><td><?= esc($encomenda->getCliente()->getNome()) ?></td><td><?= esc($encomenda->getOrigem()->getCidade()) ?></td><td><?= esc($encomenda->getDestino()->getCidade()) ?></td><td><?= $encomenda->getPeso() ?> kg</td><td>R$ <?= number_format($encomenda->getValor(), 2, ',', '.') ?></td><td><div class="inline-action"><form method="post"><input type="hidden" name="acao" value="remover_encomenda"><input type="hidden" name="id" value="<?= $encomenda->getId() ?>"><button class="btn danger" type="submit">Remover</button></form></div></td></tr><?php endforeach; ?></tbody></table></section>
+<header>
+    <div>
+        <h1>Encomendas</h1>
+        <span>Gerenciamento de Encomendas</span>
+    </div>
+</header>
+<section class="cards">
+    <div class="card">
+        <small>Total</small>
+        <h2><?= count($encomendas) ?></h2>
+    </div>
+</section>
+<section class="table-card">
+    <div class="title">Adicionar encomenda</div>
+    <form method="post" class="inline-form">
+        <input type="hidden" name="acao" value="criar_encomenda">
+        <input name="codigo" placeholder="Código" required>
+        <select name="cliente_id" required>
+            <?php foreach ($clientes as $cliente): ?>
+                <option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <select name="origem_id" required>
+            <?php foreach ($enderecos as $endereco): ?>
+                <option value="<?= $endereco->getId() ?>"><?= esc($endereco->getCidade()) ?> - <?= esc($endereco->getTipo()) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <select name="destino_id" required>
+            <?php foreach ($enderecos as $endereco): ?>
+                <option value="<?= $endereco->getId() ?>"><?= esc($endereco->getCidade()) ?> - <?= esc($endereco->getTipo()) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input name="peso" type="number" step="0.01" placeholder="Peso" required>
+        <input name="volume" type="number" step="0.01" placeholder="Volume" required>
+        <input name="valor" type="number" step="0.01" placeholder="Valor" required>
+        <button class="btn" type="submit">Adicionar</button>
+    </form>
+</section>
+<section class="table-card">
+    <div class="title">Encomendas</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Origem</th>
+                <th>Destino</th>
+                <th>Peso</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($encomendas as $encomenda): ?>
+                <tr>
+                    <td><?= esc($encomenda->getCodigo()) ?></td>
+                    <td><?= esc($encomenda->getCliente()->getNome()) ?></td>
+                    <td><?= esc($encomenda->getOrigem()->getCidade()) ?> - <?= esc($encomenda->getOrigem()->getTipo()) ?></td>
+                    <td><?= esc($encomenda->getDestino()->getCidade()) ?> - <?= esc($encomenda->getDestino()->getTipo()) ?></td>
+                    <td><?= $encomenda->getPeso() ?> kg</td>
+                    <td>R$ <?= number_format($encomenda->getValor(), 2, ',', '.') ?></td>
+                    <td>
+                        <div class="inline-action">
+                            <form method="post">
+                                <input type="hidden" name="acao" value="remover_encomenda">
+                                <input type="hidden" name="id" value="<?= $encomenda->getId() ?>">
+                                <button class="btn danger" type="submit">Remover</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</section>
