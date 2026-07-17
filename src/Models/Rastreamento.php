@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use DateTime;
@@ -7,11 +9,13 @@ use DateTime;
 class Rastreamento
 {
     private int $id = 0;
+    private int $entregaId = 0;
     private string $cidade;
     private string $descricao;
     private DateTime $data_hora;
 
-    public function __construct(string $cidade, string $descricao, DateTime $data_hora) {
+    public function __construct(string $cidade, string $descricao, DateTime $data_hora)
+    {
         $this->cidade = $cidade;
         $this->descricao = $descricao;
         $this->data_hora = $data_hora;
@@ -25,6 +29,16 @@ class Rastreamento
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setEntregaId(int $entregaId): void
+    {
+        $this->entregaId = $entregaId;
+    }
+
+    public function getEntregaId(): int
+    {
+        return $this->entregaId;
     }
 
     public function getCidade(): string

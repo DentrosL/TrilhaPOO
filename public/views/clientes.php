@@ -1,76 +1,10 @@
-<header>
-    <div>
-        <h1>Clientes</h1>
-        <span>Gerenciamento de Clientes</span>
-    </div>
-    <button class="btn">
-        + Novo Cliente
-    </button>
-</header>
-<section class="cards">
-    <div class="card">
-        <small>Total de Clientes</small>
-        <h2>154</h2>
-    </div>
-    <div class="card">
-        <small>Pessoa Física</small>
-        <h2>98</h2>
-    </div>
-    <div class="card">
-        <small>Pessoa Jurídica</small>
-        <h2>56</h2>
-    </div>
-    <div class="card">
-        <small>Novos este mês</small>
-        <h2>12</h2>
-    </div>
-</section>
-<section class="table-card">
-    <div class="table-header">
-        <div class="title">
-            Lista de Clientes
-        </div>
-        <input
-            class="search"
-            type="text"
-            placeholder="Pesquisar cliente...">
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Documento</th>
-                <th>Cidade</th>
-                <th>Telefone</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>João Silva</td>
-                <td>111.111.111-11</td>
-                <td>Joinville</td>
-                <td>(47) 99999-9999</td>
-                <td><span class="success">Ativo</span></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Maria Souza</td>
-                <td>22.333.444/0001-55</td>
-                <td>Blumenau</td>
-                <td>(47) 98888-8888</td>
-                <td><span class="success">Ativo</span></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Pedro Santos</td>
-                <td>555.444.333-22</td>
-                <td>Curitiba</td>
-                <td>(41) 97777-7777</td>
-                <td><span class="warning">Inativo</span></td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+<header><div><h1>Clientes</h1><span>Gerenciamento de Clientes</span></div></header>
+<section class="cards"><div class="card"><small>Total de Clientes</small><h2><?= count($clientes) ?></h2></div></section>
+<section class="table-card"><div class="title">Adicionar cliente</div><form method="post" class="inline-form"><input type="hidden" name="acao" value="criar_cliente"><input name="nome" placeholder="Nome" required><input name="email" placeholder="E-mail" required><input name="telefone" placeholder="Telefone" required><input name="cpf" placeholder="CPF" required><button class="btn" type="submit">Adicionar</button></form></section>
+<section class="table-card"><div class="title">Editar cliente</div><form method="post" class="inline-form" id="edit-client-form"><input type="hidden" name="acao" value="editar_cliente"><select name="cliente_id" required><?php foreach ($clientes as $cliente): ?><option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option><?php endforeach; ?></select><input name="nome" placeholder="Nome" required><input name="email" placeholder="E-mail" required><input name="telefone" placeholder="Telefone" required><input name="cpf" placeholder="CPF" required><button class="btn" type="submit">Salvar edição</button></form></section>
+<section class="table-card"><div class="title">Endereços</div><form method="post" class="inline-form"><input type="hidden" name="acao" value="criar_endereco"><select name="cliente_id" required><?php foreach ($clientes as $cliente): ?><option value="<?= $cliente->getId() ?>"><?= esc($cliente->getNome()) ?></option><?php endforeach; ?></select><input name="rua" placeholder="Rua" required><input name="numero" placeholder="Número" required><input name="bairro" placeholder="Bairro" required><input name="cidade" placeholder="Cidade" required><input name="estado" placeholder="Estado" required><input name="cep" placeholder="CEP" required><input name="tipo" placeholder="Tipo" required><button class="btn" type="submit">Adicionar endereço</button></form></section>
+<section class="table-card"><div class="title">Lista de Clientes</div><table><thead><tr><th>ID</th><th>Nome</th><th>Documento</th><th>E-mail</th><th>Telefone</th><th>Ações</th></tr></thead><tbody><?php foreach ($clientes as $cliente): ?><tr><td><?= $cliente->getId() ?></td><td><?= esc($cliente->getNome()) ?></td><td><?= esc($cliente->getCpf()) ?></td><td><?= esc($cliente->getEmail()) ?></td><td><?= esc($cliente->getTelefone()) ?></td><td><div class="inline-action"><form method="post"><input type="hidden" name="acao" value="remover_cliente"><input type="hidden" name="id" value="<?= $cliente->getId() ?>"><button class="btn danger" type="submit">Remover</button></form></div></td></tr><?php endforeach; ?></tbody></table></section>
+
+<script>
+	window.CLIENTS = <?= json_encode(array_map(function($c){ return ['id' => $c->getId(),'nome' => $c->getNome(),'email' => $c->getEmail(),'telefone' => $c->getTelefone(),'cpf' => $c->getCpf()]; }, $clientes), JSON_UNESCAPED_UNICODE) ?>;
+</script>

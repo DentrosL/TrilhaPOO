@@ -70,3 +70,33 @@ http://localhost:8000
 ```
 
 Projeto desenvolvido para fins de estudo e ensino de POO utilizando PHP puro.
+
+## Sistema de transportadora
+
+O sistema está organizado em três camadas:
+
+- `Models`: representam os dados e comportamentos do domínio.
+- `Repositories`: concentram a persistência com PostgreSQL.
+- `Services`: aplicam validações e regras de negócio antes de acessar os repositórios.
+
+O painel em `http://localhost:8000/home.php` consome os services para exibir clientes, encomendas, entregas, veículos, motoristas e rastreamentos cadastrados no banco.
+
+Na tela de Rastreamento, o formulário registra uma movimentação com cidade e descrição. A operação atualiza o status da entrega, cria o item no histórico e escreve o evento no log da aplicação.
+
+### Testes
+
+Com os containers em execução, valide o projeto com:
+
+```bash
+docker compose exec php composer test
+```
+
+Os testes de integração inserem dados em uma transação e executam rollback ao final. Assim, criações, atualizações, alterações de status e registros de rastreamento são validados sem modificar os dados do ambiente.
+
+Para executar apenas uma categoria:
+
+```bash
+docker compose exec php composer test:basic
+docker compose exec php composer test:integration
+docker compose exec php composer test:http
+```

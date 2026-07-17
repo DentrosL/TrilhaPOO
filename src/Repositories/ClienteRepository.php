@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Cliente;
@@ -91,13 +93,14 @@ class ClienteRepository extends BaseRepository
         $enderecos = [];
         while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $endereco = new Endereco(
-                $data['tipo'],
+                $this->buscarPorId((int) $data['cliente_id']),
                 $data['rua'],
                 $data['numero'],
                 $data['bairro'],
                 $data['cidade'],
                 $data['estado'],
-                $data['cep']
+                $data['cep'],
+                $data['tipo']
             );
             $endereco->setId($data['id']);
             $enderecos[] = $endereco;

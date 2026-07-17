@@ -44,7 +44,7 @@ class Connection
 
             return self::$connection;
         } catch (PDOException $exception) {
-            die('Erro ao conectar ao banco de dados: ' . $exception->getMessage());
+            throw new PDOException('Erro ao conectar ao banco de dados.', 0, $exception);
         }
     }
 }

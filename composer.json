@@ -11,5 +11,19 @@
             "email": "megami.ay@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95"
+    },
+    "scripts": {
+        "format": "php-cs-fixer fix --allow-risky=yes --sequential",
+        "format:check": "php-cs-fixer fix --dry-run --diff --allow-risky=yes --sequential",
+        "test:basic": "php tests/ServiceTest.php",
+        "test:integration": "php tests/IntegrationTest.php",
+        "test:http": "php tests/HttpResponseTest.php",
+        "test": [
+            "@test:basic",
+            "@test:integration",
+            "@test:http"
+        ]
+    }
 }

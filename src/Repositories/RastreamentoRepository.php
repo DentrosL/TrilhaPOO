@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Rastreamento;
@@ -52,6 +54,7 @@ class RastreamentoRepository extends BaseRepository
             );
 
             $rastreamento->setId((int) $data['id']);
+            $rastreamento->setEntregaId((int) $data['entrega_id']);
 
             $rastreamentos[] = $rastreamento;
         }
@@ -81,6 +84,7 @@ class RastreamentoRepository extends BaseRepository
             );
 
             $rastreamento->setId((int) $data['id']);
+            $rastreamento->setEntregaId((int) $data['entrega_id']);
 
             $rastreamentos[] = $rastreamento;
         }
@@ -109,6 +113,7 @@ class RastreamentoRepository extends BaseRepository
         );
 
         $rastreamento->setId((int) $data['id']);
+        $rastreamento->setEntregaId((int) $data['entrega_id']);
 
         return $rastreamento;
     }

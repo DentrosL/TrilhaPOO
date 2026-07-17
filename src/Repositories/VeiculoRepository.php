@@ -1,138 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
+use App\Models\Veiculo;
 use App\Models\Veiculos\Caminhao;
 use App\Models\Veiculos\Moto;
 use App\Models\Veiculos\Van;
-use App\Models\Veiculo;
 use PDO;
-use ReflectionClass;
 
 class VeiculoRepository extends BaseRepository
 {
     public function criar(Veiculo $veiculo): bool
     {
-        $sql = "INSERT INTO veiculos
-                    (tipo, placa, modelo, cor, ano, capacidade_peso, capacidade_volume)
-                VALUES
-                    (:tipo, :placa, :modelo, :cor, :ano, :capacidade_peso, :capacidade_volume)";
-        $stmt = $this->connection->prepare($sql);
-
-        $reflection = new ReflectionClass($veiculo);
-
-        return $stmt->execute([
-            'tipo'               => $reflection->getShortName(),
-            'placa'              => $veiculo->getPlaca(),
-            'modelo'             => $veiculo->getModelo(),
-            'cor'                => $veiculo->getCor(),
-            'ano'                => $veiculo->getAno(),
-            'capacidade_peso'    => $veiculo->getCapacidadePeso(),
-            'capacidade_volume'  => $veiculo->getCapacidadeVolume(),
-        ]);
+        $stmt = $this->connection->prepare('INSERT INTO veiculos (tipo, placa, modelo, cor, ano, capacidade_peso, capacidade_volume) VALUES (:tipo, :placa, :modelo, :cor, :ano, :capacidade_peso, :capacidade_volume)');
+        return $stmt->execute(['tipo' => match ($veiculo::class) {
+            Moto::class => 'Moto', Van::class => 'Van', default => 'Caminhao'
+        }, 'placa' => $veiculo->getPlaca(), 'modelo' => $veiculo->getModelo(), 'cor' => $veiculo->getCor(), 'ano' => $veiculo->getAno(), 'capacidade_peso' => $veiculo->getCapacidadePeso(), 'capacidade_volume' => $veiculo->getCapacidadeVolume()]);
     }
-
     public function deletar(int $id): bool
     {
-        $sql = "DELETE FROM veiculos WHERE id = :id";
-
-        $stmt = $this->connection->prepare($sql);
-
-        return $stmt->execute([
-            'id' => $id,
-        ]);
+        $stmt = $this->connection->prepare('DELETE FROM veiculos WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
     }
-
     public function listar(): array
     {
-        $sql = "SELECT * FROM veiculos ORDER BY id";
-        $stmt = $this->connection->query($sql);
-
-        $veiculos = [];
-
-        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            switch ($data['tipo']) {
-                case 'Moto':
-                    $veiculo = new Moto(
-                        $data['placa'],
-                        $data['marca'],
-                        $data['modelo'],
-                        $data['cor'],
-                        (int) $data['ano']
-                    );
-                    break;
-                case 'Van':
-                    $veiculo = new Van(
-                        $data['placa'],
-                        $data['marca'],
-                        $data['modelo'],
-                        $data['cor'],
-                        (int) $data['ano']
-                    );
-                    break;
-                default:
-                    $veiculo = new Caminhao(
-                        $data['placa'],
-                        $data['marca'],
-                        $data['modelo'],
-                        $data['cor'],
-                        (int) $data['ano']
-                    );
-            }
-
-            $veiculo->setId((int) $data['id']);
-
-            $veiculos[] = $veiculo;
-        }
-
-        return $veiculos;
+        return array_map(fn (array $data): Veiculo => $this->hidratar($data), $this->connection->query('SELECT * FROM veiculos ORDER BY id')->fetchAll(PDO::FETCH_ASSOC));
     }
-
     public function buscarPorId(int $id): ?Veiculo
     {
-        $sql = "SELECT * FROM veiculos WHERE id = :id";
-        $stmt = $this->connection->prepare($sql);
-
-        $stmt->execute([
-            'id' => $id,
-        ]);
-
+        $stmt = $this->connection->prepare('SELECT * FROM veiculos WHERE id = :id');
+        $stmt->execute(['id' => $id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$data) {
-            return null;
-        }
-        switch ($data['tipo']) {
-            case 'Moto':
-                $veiculo = new Moto(
-                    $data['placa'],
-                    $data['marca'],
-                    $data['modelo'],
-                    $data['cor'],
-                    (int) $data['ano']
-                );
-                break;
-            case 'Van':
-                $veiculo = new Van(
-                    $data['placa'],
-                    $data['marca'],
-                    $data['modelo'],
-                    $data['cor'],
-                    (int) $data['ano']
-                );
-                break;
-            default:
-                $veiculo = new Caminhao(
-                    $data['placa'],
-                    $data['marca'],
-                    $data['modelo'],
-                    $data['cor'],
-                    (int) $data['ano']
-                );
-        }
-
+        return $data ? $this->hidratar($data) : null;
+    }
+    private function hidratar(array $data): Veiculo
+    {
+        $classe = match ($data['tipo']) {
+            'Moto' => Moto::class, 'Van' => Van::class, default => Caminhao::class
+        };
+        $veiculo = new $classe($data['placa'], $data['modelo'], $data['cor'] ?? '', (int) $data['ano']);
         $veiculo->setId((int) $data['id']);
-
         return $veiculo;
     }
 }

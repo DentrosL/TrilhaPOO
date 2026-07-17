@@ -1,81 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Models\Encomenda;
-use App\Repositories\EncomendaRepository;
+use App\Enums\StatusEntrega;
+use App\Exceptions\EntregaFinalizadaException;
+use App\Exceptions\MotoristaIndisponivelException;
+use App\Exceptions\VeiculoSemCapacidadeException;
+use App\Models\Entrega;
+use App\Repositories\EntregaRepository;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use RuntimeException;
 
-class EncomendaService
+class EntregaService
 {
-    public function __construct(
-        private EncomendaRepository $repository = new EncomendaRepository()
-    ) {
-    }
-
-    public function criar(Encomenda $encomenda): bool
+    public function __construct(private EntregaRepository $repository = new EntregaRepository())
     {
-        $this->validar($encomenda);
-
-        if ($this->repository->buscarPorCodigo($encomenda->getCodigo())) {
-            throw new RuntimeException('Já existe uma encomenda com este código.');
-        }
-
-        return $this->repository->criar($encomenda);
     }
-
+    public function criar(Entrega $entrega): bool
+    {
+        if ($entrega->getEncomenda()->getId() <= 0 || $entrega->getMotorista()->getId() <= 0 || $entrega->getVeiculo()->getId() <= 0) {
+            throw new InvalidArgumentException('Dados da entrega são inválidos.');
+        }
+        if (!$entrega->getMotorista()->isDisponivel()) {
+            throw new MotoristaIndisponivelException('Motorista indisponível.');
+        }
+        if ($entrega->getEncomenda()->getPeso() > $entrega->getVeiculo()->getCapacidadePeso() || $entrega->getEncomenda()->getVolume() > $entrega->getVeiculo()->getCapacidadeVolume()) {
+            throw new VeiculoSemCapacidadeException('Veículo sem capacidade para a encomenda.');
+        }
+        return $this->repository->criar($entrega);
+    }
+    public function atualizarStatus(int $id, string $status): bool
+    {
+        $entrega = $this->buscarPorId($id);
+        if ($entrega->getStatus() === StatusEntrega::ENTREGUE->value) {
+            throw new EntregaFinalizadaException('A entrega já foi finalizada.');
+        }
+        if (!in_array($status, StatusEntrega::valores(), true)) {
+            throw new InvalidArgumentException('Status de entrega inválido.');
+        }
+        return $this->repository->atualizarStatus($id, $status, $status === StatusEntrega::ENTREGUE->value ? new DateTimeImmutable() : null);
+    }
     public function deletar(int $id): bool
     {
-        if (!$this->repository->buscarPorId($id)) {
-            throw new RuntimeException('Encomenda não encontrada.');
-        }
-
+        $this->buscarPorId($id);
         return $this->repository->deletar($id);
     }
-
     public function listar(): array
     {
         return $this->repository->listar();
     }
-
-    public function buscarPorId(int $id): ?Encomenda
+    public function buscarPorId(int $id): Entrega
     {
-        return $this->repository->buscarPorId($id);
-    }
-
-    private function validar(Encomenda $encomenda): void
-    {
-        if (trim($encomenda->getCodigo()) === '') {
-            throw new InvalidArgumentException('Código é obrigatório.');
-        }
-
-        if ($encomenda->getCliente()->getId() <= 0) {
-            throw new InvalidArgumentException('Cliente inválido.');
-        }
-
-        if ($encomenda->getOrigem()->getId() <= 0) {
-            throw new InvalidArgumentException('Endereço de origem inválido.');
-        }
-
-        if ($encomenda->getDestino()->getId() <= 0) {
-            throw new InvalidArgumentException('Endereço de destino inválido.');
-        }
-
-        if ($encomenda->getOrigem()->getId() === $encomenda->getDestino()->getId()) {
-            throw new InvalidArgumentException('Origem e destino devem ser diferentes.');
-        }
-
-        if ($encomenda->getPeso() <= 0) {
-            throw new InvalidArgumentException('Peso deve ser maior que zero.');
-        }
-
-        if ($encomenda->getVolume() <= 0) {
-            throw new InvalidArgumentException('Volume deve ser maior que zero.');
-        }
-
-        if ($encomenda->getValor() < 0) {
-            throw new InvalidArgumentException('Valor inválido.');
-        }
+        $entrega = $this->repository->buscarPorId($id);
+        if (!$entrega) {
+            throw new RuntimeException('Entrega não encontrada.');
+        } return $entrega;
     }
 }

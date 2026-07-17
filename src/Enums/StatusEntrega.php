@@ -1,13 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
-class StatusEntrega
+enum StatusEntrega: string
 {
-    public const AGUARDANDO = 'Aguardando';
-    public const EM_PREPARACAO = 'Em preparação';
-    public const EM_TRANSITO = 'Em trânsito';
-    public const SAIU_PARA_ENTREGA = 'Saiu para entrega';
-    public const ENTREGUE = 'Entregue';
-    public const CANCELADA = 'Cancelada';
+    case AGUARDANDO = 'Aguardando';
+    case EM_PREPARACAO = 'Em preparação';
+    case EM_TRANSITO = 'Em trânsito';
+    case SAIU_PARA_ENTREGA = 'Saiu para entrega';
+    case ENTREGUE = 'Entregue';
+    case CANCELADA = 'Cancelada';
+
+    public static function valores(): array
+    {
+        return array_map(static fn (self $status): string => $status->value, self::cases());
+    }
 }

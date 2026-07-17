@@ -1,10 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Encomenda;
-use App\Repositories\ClienteRepository;
-use App\Repositories\EnderecoRepository;
 use PDO;
 
 class EncomendaRepository extends BaseRepository

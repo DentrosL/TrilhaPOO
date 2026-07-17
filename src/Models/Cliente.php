@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 class Cliente
@@ -11,7 +13,7 @@ class Cliente
     private int $id = 0;
     private array $enderecos = [];
 
-    public function __construct(string $nome,string $email,string $telefone,string $cpf)
+    public function __construct(string $nome, string $email, string $telefone, string $cpf)
     {
         $this->nome = $nome;
         $this->email = $email;
@@ -55,7 +57,7 @@ class Cliente
     }
 
     public function adicionarEndereco(Endereco $endereco): void
-    {   
+    {
         $this->enderecos[] = $endereco;
     }
 }

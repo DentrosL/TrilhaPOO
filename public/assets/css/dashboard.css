@@ -213,6 +213,14 @@ td{
     background:#1d4ed8;
 }
 
+.btn.danger{
+    background:#dc2626;
+}
+
+.btn.danger:hover{
+    background:#b91c1c;
+}
+
 .table-header{
     display:flex;
     justify-content:space-between;
@@ -232,6 +240,85 @@ td{
 .search:focus{
     outline:none;
     border-color:#2563eb;
+}
+
+.inline-form,
+.inline-action{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+}
+
+.inline-form input,
+.inline-form select,
+.inline-form textarea,
+.inline-form .btn{
+    min-height:42px;
+}
+
+.inline-form input,
+.inline-form select,
+.inline-form textarea{
+    background:#111827;
+    color:#fff;
+    border:1px solid #374151;
+    border-radius:8px;
+    padding:10px 12px;
+}
+
+.inline-form select{ min-width:160px; }
+.inline-form input[type="number"]{ width:120px; }
+.inline-form input, .inline-form select{ display:inline-block; }
+.inline-form .btn{ white-space:nowrap; }
+
+.inline-action form{ margin:0; }
+
+.inline-action form{
+    display:inline-flex;
+}
+
+.alert{
+    border-radius:10px;
+    margin-bottom:20px;
+    padding:14px 18px;
+}
+
+.alert.error{
+    background:#7f1d1d;
+    border:1px solid #ef4444;
+}
+
+.success-bg{
+    background:#14532d;
+    border:1px solid #22c55e;
+}
+
+.movement-form{
+    display:grid;
+    gap:14px;
+}
+
+.movement-form label{
+    color:#cbd5e1;
+    display:grid;
+    gap:6px;
+}
+
+.movement-form input,
+.movement-form select,
+.movement-form textarea{
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:8px;
+    color:#fff;
+    font:inherit;
+    padding:10px;
+}
+
+.movement-form textarea{
+    min-height:88px;
+    resize:vertical;
 }
 
 tbody tr{

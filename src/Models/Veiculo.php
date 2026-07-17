@@ -1,27 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 class Veiculo
 {
-    private int $id;
+    private int $id = 0;
     private string $placa;
-    private string $marca;
     private string $modelo;
     private string $cor;
     private int $ano;
     protected float $capacidade_peso;
     protected float $capacidade_volume;
 
-    public function __construct(string $placa, string $marca, string $modelo, string $cor, int $ano)
+    public function __construct(string $placa, string $modelo, string $cor, int $ano)
     {
         $this->placa = $placa;
-        $this->marca = $marca;
         $this->modelo = $modelo;
         $this->cor = $cor;
         $this->ano = $ano;
     }
-    
+
     public function setId(int $id): void
     {
         $this->id = $id;
@@ -35,11 +35,6 @@ class Veiculo
     public function getPlaca(): string
     {
         return $this->placa;
-    }
-
-    public function getMarca(): string
-    {
-        return $this->marca;
     }
 
     public function getModelo(): string
